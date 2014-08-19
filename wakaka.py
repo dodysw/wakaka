@@ -82,38 +82,43 @@ class Wakaka:
         print("%s [%s]: GROUP MESSAGE RECEIVED: %s (%s | %s | %s)" % (jid, formattedDate, messageContent, messageId, author, pushName))
 
         #distributing message to the rest of the memberships
-        for gid in self.groupMembership:
-            if gid != jid:
-                msgId = self.methodsInterface.call("message_send", (gid, "%s: %s" % (pushName, messageContent)))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    msgId = self.methodsInterface.call("message_send", (gid, "%s: %s" % (pushName, messageContent)))
 
         if wantsReceipt and self.sendReceipts:
             self.methodsInterface.call("message_ack", (jid, messageId))
 
-
     def onGroupImageReceived(self, messageId, jid, author, preview, url, size, receiptRequested):
-        for gid in self.groupMembership:
-            if gid != jid:
-                self.methodsInterface.call("message_imageSend", (gid, url, author, size, preview))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    self.methodsInterface.call("message_imageSend", (gid, url, author, size, preview))
 
     def onGroupVideoReceived(self, messageId, jid, author, preview, url, size, receiptRequested):
-        for gid in self.groupMembership:
-            if gid != jid:
-                self.methodsInterface.call("message_videoSend", (gid, url, author, size, preview))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    self.methodsInterface.call("message_videoSend", (gid, url, author, size, preview))
 
     def onGroupAudioReceived(self, messageId, jid, author, url, size, receiptRequested):
-        for gid in self.groupMembership:
-            if gid != jid:
-                self.methodsInterface.call("message_audioSend", (gid, url, author, size))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    self.methodsInterface.call("message_audioSend", (gid, url, author, size))
 
     def onGroupLocationReceived(self, messageId, jid, author, name, preview, latitude, longitude, receiptRequested):
-        for gid in self.groupMembership:
-            if gid != jid:
-                self.methodsInterface.call("message_locationSend", (gid, latitude, longitude, preview))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    self.methodsInterface.call("message_locationSend", (gid, latitude, longitude, preview))
 
     def onGroupVcardReceived(self, messageId, jid, author, name, data, receiptRequested):
-        for gid in self.groupMembership:
-            if gid != jid:
-                self.methodsInterface.call("message_vcardSend", (gid, data, name))
+        if author != (self.username + '@s.whatsapp.net'):
+            for gid in self.groupMembership:
+                if gid != jid:
+                    self.methodsInterface.call("message_vcardSend", (gid, data, name))
 
     def onGroupSubjectReceived(self, messageId, jid, author, subject, timestamp, receiptRequested):
         formattedDate = datetime.datetime.fromtimestamp(timestamp).strftime('%d-%m-%Y %H:%M')
